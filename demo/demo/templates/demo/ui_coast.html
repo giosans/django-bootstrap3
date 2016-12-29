@@ -1,0 +1,98 @@
+{% extends 'demo/base_uicoast.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}
+    UI Coast
+{% endblock %}
+
+{% block content %}
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Coastal Graphs
+                    
+                    <div class="pull-right"><a href="https://www.deltares.nl"><img src="https://media.glassdoor.com/sql/636075/deltares-squarelogo-1426660510788.png" width="45" height="45"></a></div> 
+                    <small>Downloader</small>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Project One -->
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Coastal Graphs Downloader</h3>
+                <h4>Show graphs</h4>
+                <p>Download figures from OpenEarthRawData repository.</p>
+	            <div class="btn-group">
+			        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			        	Select Graphs&nbsp;<span class="caret"></span></button>
+			            <ul class="dropdown-menu">
+						    <li><a class="dropdown-item" href="#">Kustlijn</a></li>
+						    <li><a class="dropdown-item" href="#">Mean Water</a></li>
+						    <li><a class="dropdown-item" href="#">Strandbreedte</a></li>
+						</ul>
+				</div>
+	            <div class="btn-group">
+			        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select File&nbsp;<span class="caret"></span></button>
+					<ul class="dropdown-menu">
+                    {% for link in list %}
+                        <li><a href="#" class="small" data-value="{{ link }}" tabIndex="-1"><input type="checkbox"/>&nbsp;{{ link }}</a></li>
+                    {% endfor %} 
+					  <li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;Option 1</a></li>
+					</ul>
+				</div><p>&nbsp;</p>
+                <h4>Download graphs</h4>
+                <p>Download figures from OpenEarthRawData repository.</p>
+                <div class="btn-group">
+                    {% csrf_token %}
+                    <select class="form-control" data-style="btn-primary" name="graphtype">
+                            <option>Kustlijn</option>
+                            <option>Mean Water</option>
+                            <option>Strandbreedte</option>
+                    </select>
+                </div>
+                <p>{{ so }}</p>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Files&nbsp;<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                    {% for link in list %}
+                        <li><a href="#" class="small" data-value="{{ link }}" tabIndex="-1"><input type="checkbox"/>&nbsp;{{ link }}</a></li>
+                    {% endfor %} 
+                        <li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;Option 1</a></li>
+                    </ul>
+                </div><p>&nbsp;</p>
+                <div class="btn-group">
+                    <a class="btn btn-success btn-block" href="#">Download&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a>
+                </div>
+	        </div>
+            <br>
+            <div class="col-md-8">
+                <a href="#">
+                    <img class="img-responsive" src="{{ baseurl }}/KL_Plots/Ameland_3001400.png" alt="">
+                </a>
+            </div>
+        <!-- /.row -->
+    <hr>
+    {% debug %}
+    <form role="form" method="post" enctype="multipart/form-data" {% if layout != 'vertical' %}class="form-{{ layout }}"{% endif %}>
+        {% csrf_token %}
+        {% bootstrap_form form layout=layout %}
+        {% buttons submit='OK' reset="Cancel" %}{% endbuttons %}
+    </form>
+
+    <hr>
+        <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Deltares 2017</p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </footer>
+
+{% endblock %}
+

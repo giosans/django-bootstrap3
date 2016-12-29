@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.forms.widgets import flatatt
 
-from .text import text_value
+from bootstrap3.text import text_value
 
 
 # Handle HTML and CSS manipulation

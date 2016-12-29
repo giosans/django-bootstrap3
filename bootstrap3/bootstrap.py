@@ -9,6 +9,7 @@ from django.utils.importlib import import_module
 BOOTSTRAP3_DEFAULTS = {
     'jquery_url': '//code.jquery.com/jquery.min.js',
     'base_url': '//netdna.bootstrapcdn.com/bootstrap/3.2.0/',
+    'basebs_url': '//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/',
     'css_url': None,
     'theme_url': None,
     'javascript_url': None,
@@ -53,6 +54,11 @@ def bootstrap_url(postfix):
     """
     return get_bootstrap_setting('base_url') + postfix
 
+def bootstrapselect_url(postfix):
+    """
+    Prefix a relative url with the bootstrap base url
+    """
+    return get_bootstrap_setting('basebs_url') + postfix
 
 def jquery_url():
     """
@@ -74,6 +80,18 @@ def css_url():
     """
     return get_bootstrap_setting('css_url') or bootstrap_url('css/bootstrap.min.css')
 
+def javascriptselect_url():
+    """
+    Return the full url to the Bootstrap JavaScript file
+    """
+    return get_bootstrap_setting('javascriptselect_url') or bootstrap_url('js/bootstrap-select.min.js')
+
+
+def cssselect_url():
+    """
+    Return the full url to the Bootstrap CSS file
+    """
+    return get_bootstrap_setting('cssselect_url') or bootstrap_url('css/bootstrap-select.min.css')
 
 def theme_url():
     """

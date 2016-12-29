@@ -8,7 +8,7 @@ from math import floor
 from django import template
 from django.template.loader import get_template
 
-from ..bootstrap import css_url, javascript_url, jquery_url, theme_url, get_bootstrap_setting
+from ..bootstrap import css_url, javascript_url, cssselect_url, javascriptselect_url, jquery_url, theme_url, get_bootstrap_setting
 from ..html import render_link_tag
 from ..forms import render_button, render_field, render_field_and_label, render_form, render_form_group, render_formset, \
     render_label, render_form_errors, render_formset_errors
@@ -78,6 +78,30 @@ def bootstrap_javascript_url():
 
 
 @register.simple_tag
+def bootstrapselect_javascript_url():
+    """
+    Return the full url to the Bootstrap JavaScript library
+
+    Default value: ``None``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrapselect_javascript_url
+
+    **usage**::
+
+        {% bootstrapselect_javascript_url %}
+
+    **example**::
+
+        {% bootstrapselect_javascript_url %}
+    """
+    return javascriptselect_url()
+
+
+@register.simple_tag
 def bootstrap_css_url():
     """
     Return the full url to the Bootstrap CSS library
@@ -99,6 +123,30 @@ def bootstrap_css_url():
         {% bootstrap_css_url %}
     """
     return css_url()
+
+
+@register.simple_tag
+def bootstrapselect_css_url():
+    """
+    Return the full url to the Bootstrap CSS library
+
+    Default value: ``None``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrapselect_css_url
+
+    **usage**::
+
+        {% bootstrapselect_css_url %}
+
+    **example**::
+
+        {% bootstrapselect_css_url %}
+    """
+    return cssselect_url()
 
 
 @register.simple_tag
@@ -153,6 +201,33 @@ def bootstrap_css():
 
 
 @register.simple_tag
+def bootstrapselect_css():
+    """
+    Return HTML for Bootstrap CSS
+    Adjust url in settings. If no url is returned, we don't want this statement to return any HTML.
+    This is intended behavior.
+
+    Default value: ``FIXTHIS``
+
+    This value is configurable, see Settings section
+
+    **Tag name**::
+
+        bootstrapselect_css
+
+    **usage**::
+
+        {% bootstrapselect_css %}
+
+    **example**::
+
+        {% bootstrapselect_css %}
+    """
+    urls = [url for url in [bootstrapselect_css_url()] if url]
+    return ''.join([render_link_tag(url, media='screen') for url in urls])
+
+
+@register.simple_tag
 def bootstrap_javascript(jquery=None):
     """
     Return HTML for Bootstrap JavaScript.
@@ -193,6 +268,9 @@ def bootstrap_javascript(jquery=None):
     url = bootstrap_javascript_url()
     if url:
         javascript += '<script src="{url}"></script>'.format(url=url)
+    url = bootstrapselect_javascript_url()
+    if url:
+        javascript += '<script src="{url}"></script>'.format(url=url)        
     return javascript
 
 
